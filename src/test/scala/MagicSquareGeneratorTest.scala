@@ -1,8 +1,7 @@
 import MagicSquareGenerator._
 import breeze.linalg._
 import org.scalatest.{FunSpec, Matchers}
-
-import scala.math.pow
+import IntegerExtensions._
 
 class MagicSquareGeneratorTest extends FunSpec with Matchers {
   describe("Magic square generation") {
@@ -20,7 +19,7 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
       }
     }
 
-    List(1, 3, 5, 7).foreach { n => {
+    List(1, 3, 4, 5, 7, 8, 12).foreach { n =>
       describe(s"when n = $n") {
         it(s"returns a valid magic square of order $n") {
           val result = generateMagicSquare(n)
@@ -37,7 +36,6 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
           allElements(result) should contain theSameElementsAs (1 to n ** 2)
         }
       }
-    }
     }
   }
 
@@ -64,9 +62,4 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
   private def allElements(square: DenseMatrix[Int]): Seq[Int] = {
     square.toDenseVector.data
   }
-
-  implicit class PowerInt(i: Int) {
-    def **(b: Int): Int = pow(i, b).intValue
-  }
-
 }

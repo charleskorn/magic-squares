@@ -1,4 +1,7 @@
+import IntegerExtensions._
+import MatrixMethods._
 import breeze.linalg._
+import breeze.numerics.floor
 
 object MagicSquareGenerator {
   // See http://www.mathworks.com/moler/exm/chapters/magic.pdf for an explanation
@@ -11,26 +14,35 @@ object MagicSquareGenerator {
         throw NoMagicSquareExistsException("There is no magic square of order 2.")
       case _ if isOdd(n) =>
         generateOddSquare(n)
+      case _ if isDoublyEven(n) =>
+        generateDoublyEvenSquare(n)
     }
   }
 
   private def isOdd(n: Int) = n % 2 == 1
+  private def isDoublyEven(n: Int) = n % 4 == 0
 
   private def generateOddSquare(n: Int): DenseMatrix[Int] = {
-    val I = stepMatrix(n)
-    val J = stepMatrix(n).t
+    val I = rainbowMatrix(n)
+    val J = rainbowMatrix(n).t
 
-    val A = modulus(I + J + (n - 3)/2, n)
-    val B = modulus(I + 2*J - 2, n)
+    val A = (I + J + (n - 3) / 2).mod(n)
+    val B = (I + 2 * J - 2).mod(n)
 
-    n*A + B + 1
+    n * A + B + 1
   }
 
-  def stepMatrix(n: Int): DenseMatrix[Int] = {
-    DenseMatrix.tabulate(n, n){(i, _) => i + 1}
+  private def generateDoublyEvenSquare(n: Int): DenseMatrix[Int] = {
+    DenseMatrix.tabulate(n, n) { (i, j) =>
+      val position = i * n + j + 1
+      val shouldTakeOpposite = floor(((i + 1) % 4) / 2) == floor(((j + 1) % 4) / 2)
+
+      if (shouldTakeOpposite) {
+        n ** 2 + 1 - position
+      } else {
+        position
+      }
+    }
   }
 
-  def modulus(matrix: DenseMatrix[Int], n: Int): DenseMatrix[Int] = {
-    matrix.map(v => v % n)
-  }
 }
