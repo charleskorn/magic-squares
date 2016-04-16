@@ -8,5 +8,11 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
         generateMagicSquare(0) shouldBe empty
       }
     }
+
+    describe("when n = 1") {
+      it("should return a square with just the number 1") {
+        generateMagicSquare(1) should be (Array(Array(1)))
+      }
+    }
   }
 }
