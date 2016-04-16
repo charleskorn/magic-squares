@@ -1,5 +1,8 @@
-apply plugin: 'scala'
-apply plugin: 'application'
+plugins {
+    id "scala"
+    id "application"
+    id "com.github.maiflai.scalatest" version "0.11"
+}
 
 repositories {
     jcenter()
@@ -8,15 +11,8 @@ repositories {
 dependencies {
     compile 'org.scala-lang:scala-library:2.11.8'
 
-    testCompile 'junit:junit:4.12'
     testCompile 'org.scalatest:scalatest_2.11:2.2.6'
-    testRuntime 'org.scala-lang.modules:scala-xml_2.11:1.0.5'
-}
-
-test {
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+    testRuntime 'org.pegdown:pegdown:1.1.0'
 }
 
 mainClassName = 'Main'
