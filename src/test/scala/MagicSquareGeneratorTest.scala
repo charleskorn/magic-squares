@@ -2,6 +2,8 @@ import MagicSquareGenerator._
 import breeze.linalg._
 import org.scalatest.{FunSpec, Matchers}
 
+import scala.math.pow
+
 class MagicSquareGeneratorTest extends FunSpec with Matchers {
   describe("Magic square generation") {
     describe("when n = 0") {
@@ -12,31 +14,30 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
       }
     }
 
-    describe("when n = 1") {
-      it("returns a square with just the number 1") {
-        generateMagicSquare(1) should be(DenseMatrix.ones[Int](1, 1))
-      }
-    }
-
     describe("when n = 2") {
       it("throws an exception") {
         a[NoMagicSquareExistsException] should be thrownBy generateMagicSquare(2)
       }
     }
 
-    describe("when n = 3") {
-      it("returns a valid magic square of order 3") {
-        val result = generateMagicSquare(3)
+    List(1, 3, 5, 7).foreach { n => {
+      describe(s"when n = $n") {
+        it(s"returns a valid magic square of order $n") {
+          val result = generateMagicSquare(n)
 
-        result.rows shouldBe 3
-        result.cols shouldBe 3
+          result.rows shouldBe n
+          result.cols shouldBe n
 
-        columnSums(result) shouldBe vectorOf(15, size = 3)
-        rowSums(result) shouldBe vectorOf(15, size = 3)
-        firstDiagonalSum(result) shouldBe 15
-        secondDiagonalSum(result) shouldBe 15
-        allElements(result) should contain theSameElementsAs (1 to 9)
+          val expectedSum = (n ** 3 + n) / 2
+
+          columnSums(result) shouldBe vectorOf(expectedSum, size = n)
+          rowSums(result) shouldBe vectorOf(expectedSum, size = n)
+          firstDiagonalSum(result) shouldBe expectedSum
+          secondDiagonalSum(result) shouldBe expectedSum
+          allElements(result) should contain theSameElementsAs (1 to n ** 2)
+        }
       }
+    }
     }
   }
 
@@ -63,4 +64,9 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
   private def allElements(square: DenseMatrix[Int]): Seq[Int] = {
     square.toDenseVector.data
   }
+
+  implicit class PowerInt(i: Int) {
+    def **(b: Int): Int = pow(i, b).intValue
+  }
+
 }
