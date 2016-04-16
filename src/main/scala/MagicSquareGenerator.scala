@@ -1,9 +1,8 @@
 import IntegerExtensions._
+import MatrixExtensions._
 import MatrixMethods._
 import breeze.linalg._
 import breeze.numerics.floor
-
-import scala.collection.immutable.Range.Inclusive
 
 object MagicSquareGenerator {
   // See http://www.mathworks.com/moler/exm/chapters/magic.pdf for an explanation

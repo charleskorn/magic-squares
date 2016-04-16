@@ -1,7 +1,7 @@
+import IntegerExtensions._
 import MagicSquareGenerator._
 import breeze.linalg._
 import org.scalatest.{FunSpec, Matchers}
-import IntegerExtensions._
 
 class MagicSquareGeneratorTest extends FunSpec with Matchers {
   describe("Magic square generation") {
