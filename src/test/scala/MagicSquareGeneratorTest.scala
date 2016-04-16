@@ -19,7 +19,7 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
       }
     }
 
-    List(1, 3, 4, 5, 7, 8, 12).foreach { n =>
+    List(1, 3, 4, 5, 6, 7, 8, 10, 12, 14).foreach { n =>
       describe(s"when n = $n") {
         it(s"returns a valid magic square of order $n") {
           val result = generateMagicSquare(n)

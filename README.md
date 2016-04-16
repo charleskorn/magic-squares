@@ -25,3 +25,5 @@ Run `./go.sh test` to run the tests
 
 * [http://www.mathworks.com/moler/exm/chapters/magic.pdf](http://www.mathworks.com/moler/exm/chapters/magic.pdf),
   an extract from a book showing how MATLAB implements its `magic` function to generate magic squares.
+* [http://www.1728.org/magicsq3.htm](http://www.1728.org/magicsq3.htm) for the singly-double magic square generation
+  algorithm.
