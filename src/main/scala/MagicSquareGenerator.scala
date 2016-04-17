@@ -5,8 +5,6 @@ import breeze.linalg._
 import breeze.numerics.floor
 
 object MagicSquareGenerator {
-  // See http://www.mathworks.com/moler/exm/chapters/magic.pdf for an explanation
-  // of the algorithms used here.
   def generateMagicSquare(n: Int): DenseMatrix[Int] = {
     if (isOdd(n)) {
       generateOddSquare(n)
@@ -27,6 +25,7 @@ object MagicSquareGenerator {
 
   private def isSinglyEven(n: Int) = n % 2 == 0 && !isDoublyEven(n)
 
+  // See http://www.mathworks.com/moler/exm/chapters/magic.pdf for an explanation of the algorithm used here.
   private def generateOddSquare(n: Int): DenseMatrix[Int] = {
     val I = rainbowMatrix(n)
     val J = rainbowMatrix(n).t
@@ -37,6 +36,7 @@ object MagicSquareGenerator {
     n * A + B + 1
   }
 
+  // See http://www.mathworks.com/moler/exm/chapters/magic.pdf for an explanation of the algorithm used here.
   private def generateDoublyEvenSquare(n: Int): DenseMatrix[Int] = {
     DenseMatrix.tabulate(n, n) { (i, j) =>
       val position = i * n + j + 1
@@ -50,6 +50,7 @@ object MagicSquareGenerator {
     }
   }
 
+  // See http://www.1728.org/magicsq3.htm for an explanation of the algorithm used here.
   private def generateSinglyEvenSquare(n: Int): DenseMatrix[Int] = {
     val halfN = n / 2
     val quarter = generateOddSquare(halfN)
@@ -59,25 +60,29 @@ object MagicSquareGenerator {
     val bottom = DenseMatrix.vertcat(quarter + 2 * factor, quarter + factor)
     var joined = DenseMatrix.horzcat(top, bottom)
 
-    doSwaps(joined)
+    doSinglyEvenSquareSwaps(joined)
 
     joined
   }
 
-  private def doSwaps(matrix: DenseMatrix[Int]): Unit = {
+  private def doSinglyEvenSquareSwaps(matrix: DenseMatrix[Int]): Unit = {
     val n = matrix.cols
     val halfN = n / 2
     val leftSwapSize = (halfN - 1) / 2
 
+    val firstRowInTopHalf = 0
     val middleRowInTopHalf = leftSwapSize
     val lastRowInTopHalf = halfN - 1
+
     val firstRowInBottomHalf = halfN
     val middleRowInBottomHalf = firstRowInBottomHalf + leftSwapSize
     val lastRowInBottomHalf = n - 1
+
     val columnsToSwapOnLeft = 0 until leftSwapSize
+    val columnsToSwapInMiddleRowsOnLeft = 1 to leftSwapSize
 
     matrix.swap(
-      0 until middleRowInTopHalf, columnsToSwapOnLeft
+      firstRowInTopHalf until middleRowInTopHalf, columnsToSwapOnLeft
     )(
       firstRowInBottomHalf until middleRowInBottomHalf, columnsToSwapOnLeft
     )
@@ -89,20 +94,20 @@ object MagicSquareGenerator {
     )
 
     matrix.swap(
-      middleRowInTopHalf to middleRowInTopHalf, 1 to leftSwapSize
+      middleRowInTopHalf to middleRowInTopHalf, columnsToSwapInMiddleRowsOnLeft
     )(
-      middleRowInBottomHalf to middleRowInBottomHalf, 1 to leftSwapSize
+      middleRowInBottomHalf to middleRowInBottomHalf, columnsToSwapInMiddleRowsOnLeft
     )
 
     val rightSwapSize = leftSwapSize - 1
 
     if (rightSwapSize > 0) {
-      val lastColumn = n - 1
-      val firstColumnToSwapOn = lastColumn - rightSwapSize + 1
-      val columnsToSwapOnRight = firstColumnToSwapOn to lastColumn
+      val lastColumnInMatrix = n - 1
+      val firstColumnToSwap = lastColumnInMatrix - rightSwapSize + 1
+      val columnsToSwapOnRight = firstColumnToSwap to lastColumnInMatrix
 
       matrix.swap(
-        0 to lastRowInTopHalf, columnsToSwapOnRight
+        firstRowInTopHalf to lastRowInTopHalf, columnsToSwapOnRight
       )(
         firstRowInBottomHalf to lastRowInBottomHalf, columnsToSwapOnRight
       )

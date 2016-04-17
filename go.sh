@@ -5,6 +5,10 @@ set -e
 function main {
   case "$1" in
 
+  build)
+    build
+    ;;
+
   test)
     test
     ;;
@@ -23,8 +27,13 @@ function main {
 
 function help {
   echo "Usage:"
+  echo " build        builds the application"
   echo " test         runs the test suite"
   echo " run <args>   builds and runs the application (<args> are passed through to the application)"
+}
+
+function build {
+  ./gradlew installDist
 }
 
 function test {

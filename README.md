@@ -13,13 +13,17 @@ Java (I use version 1.8, older versions might work.)
 
 All other prerequisites will be downloaded automatically when needed.
 
+## Testing
+
+Run `./go.sh build` to build the application
+
 ## Running
 
-Run `./go.sh run <number>` to run the application
+Run `./go.sh run <number>` to build and run the application
 
 ## Testing
 
-Run `./go.sh test` to run the tests
+Run `./go.sh test` to build and run the tests
 
 ## References
 
