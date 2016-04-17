@@ -9,9 +9,9 @@ There's more information about magic squares on [Wikipedia](https://en.wikipedia
 
 ## Prerequisites
 
-Java (I use version 1.8, older versions might work.)
+* JVM (I use version 1.8, older versions might work.)
 
-All other prerequisites will be downloaded automatically when needed.
+All other prerequisites (Gradle, Scala, libraries etc.) will be downloaded automatically when needed.
 
 ## Testing
 
