@@ -1,5 +1,7 @@
 # magic-squares
 
+[![wercker status](https://app.wercker.com/status/75c83e41f0f856b26835e24d08a2cb4f/s "wercker status")](https://app.wercker.com/project/bykey/75c83e41f0f856b26835e24d08a2cb4f)
+
 The fourth Shokunin challenge:
 
 > With a positive integer x as input, build and print the magic square of order x
