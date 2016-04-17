@@ -1,0 +1,11 @@
+box: java
+
+build:
+  steps:
+    - script:
+        name: build
+        code: ./go.sh build
+
+    - script:
+        name: test
+        code: ./go.sh test

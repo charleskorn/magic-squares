@@ -1,3 +1,6 @@
 .gradle
 .idea
 build
+_builds
+_cache
+_steps
