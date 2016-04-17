@@ -13,9 +13,11 @@ class MagicSquareGeneratorTest extends FunSpec with Matchers {
       }
     }
 
-    describe("when n = 2") {
-      it("throws an exception") {
-        a[NoMagicSquareExistsException] should be thrownBy generateMagicSquare(2)
+    List(-1, 2).foreach { n =>
+      describe(s"when n = $n") {
+        it("throws an exception") {
+          a[NoMagicSquareExistsException] should be thrownBy generateMagicSquare(n)
+        }
       }
     }
 
