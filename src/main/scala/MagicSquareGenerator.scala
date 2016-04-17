@@ -6,24 +6,22 @@ import breeze.numerics.floor
 
 object MagicSquareGenerator {
   def generateMagicSquare(n: Int): DenseMatrix[Int] = {
-    if (isOdd(n)) {
+    if (isOddOrder(n)) {
       generateOddSquare(n)
-    } else if (n == 2) {
-      throw NoMagicSquareExistsException(s"There is no magic square of order $n.")
-    } else if (isDoublyEven(n)) {
+    } else if (isDoublyEvenOrder(n)) {
       generateDoublyEvenSquare(n)
-    } else if (isSinglyEven(n)) {
+    } else if (isSinglyEvenOrder(n)) {
       generateSinglyEvenSquare(n)
     } else {
       throw NoMagicSquareExistsException(s"There is no magic square of order $n.")
     }
   }
 
-  private def isOdd(n: Int) = n % 2 == 1
+  private def isOddOrder(n: Int) = n % 2 == 1 && n > 0
 
-  private def isDoublyEven(n: Int) = n % 4 == 0
+  private def isDoublyEvenOrder(n: Int) = n % 4 == 0 && n > 0
 
-  private def isSinglyEven(n: Int) = n % 2 == 0 && !isDoublyEven(n)
+  private def isSinglyEvenOrder(n: Int) = n % 2 == 0 && n % 4 != 0 && n > 2
 
   // See http://www.mathworks.com/moler/exm/chapters/magic.pdf for an explanation of the algorithm used here.
   private def generateOddSquare(n: Int): DenseMatrix[Int] = {

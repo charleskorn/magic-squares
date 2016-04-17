@@ -5,15 +5,7 @@ import org.scalatest.{FunSpec, Matchers}
 
 class MagicSquareGeneratorTest extends FunSpec with Matchers {
   describe("Magic square generation") {
-    describe("when n = 0") {
-      it("returns an empty square") {
-        val result = generateMagicSquare(0)
-        result.rows shouldBe 0
-        result.cols shouldBe 0
-      }
-    }
-
-    List(-1, 2).foreach { n =>
+    List(-1, 0, 2).foreach { n =>
       describe(s"when n = $n") {
         it("throws an exception") {
           a[NoMagicSquareExistsException] should be thrownBy generateMagicSquare(n)
