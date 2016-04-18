@@ -12,7 +12,7 @@ object Main extends App {
 
       firstArgument match {
         case Some(n) =>
-          println(MagicSquareGenerator.generateMagicSquare(n))
+          println(MagicSquareGenerator.generateMagicSquare(n).toString(Int.MaxValue, Int.MaxValue))
         case None =>
           println("Please provide a valid integer.")
       }

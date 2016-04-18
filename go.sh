@@ -41,7 +41,10 @@ function test {
 }
 
 function run {
+  echo "Building..."
   ./gradlew installDist --quiet
+
+  echo "Running..."
   ./build/install/magic-squares/bin/magic-squares "$@"
 }
 
